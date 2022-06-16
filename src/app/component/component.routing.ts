@@ -8,35 +8,39 @@ import { BadgeComponent } from './badge/badge.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { CardsComponent } from './card/card.component';
 import { TableComponent } from './table/table.component';
-
+import { ActivityComponent } from './models-components/activity/activity.component';
+import {ClientComponent} from './models-components/client/client.component'
+import { ExpensesComponent } from './models-components/expenses/expenses.component';
+import { IncomesComponent } from './models-components/incomes/incomes.component';
+import { PursachesComponent } from './models-components/pursaches/pursaches.component';
 
 export const ComponentsRoutes: Routes = [
 	{
 		path: '',
 		children: [
 			{
-				path: 'table',
-				component: TableComponent
+				path: 'activity',
+				component: ActivityComponent
 			},
 			{
-				path: 'card',
-				component: CardsComponent
+				path: 'client',
+				component: ClientComponent
 			},
 			{
-				path: 'pagination',
-				component: NgbdpaginationBasicComponent
+				path: 'expenses',
+				component: ExpensesComponent
 			},
 			{
-				path: 'badges',
-				component: BadgeComponent
+				path: 'incomes',
+				component: IncomesComponent
 			},
 			{
-				path: 'alert',
-				component: NgbdAlertBasicComponent
+				path: 'pursaches',
+				component: PursachesComponent
 			},
 			{
 				path: 'dropdown',
-				component: NgbdDropdownBasicComponent
+				component: TableComponent
 			},
 			{
 				path: 'nav',
