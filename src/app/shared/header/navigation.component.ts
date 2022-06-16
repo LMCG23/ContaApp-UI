@@ -1,6 +1,8 @@
-import { Component, AfterViewInit, EventEmitter, Output } from '@angular/core';
+import { Component, AfterViewInit, EventEmitter, Output, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { AuthserviceService } from '../authentication/authservice.service';
 
 declare var $: any;
 
@@ -15,7 +17,7 @@ export class NavigationComponent implements AfterViewInit {
 
   public showSearch = false;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,@Inject (AuthserviceService) private authSvs:AuthserviceService,private router:Router) {
   }
 
   // This is for Notifications
@@ -112,4 +114,9 @@ export class NavigationComponent implements AfterViewInit {
   }]
 
   ngAfterViewInit() { }
+
+  logout(){
+this.authSvs.logout();
+this.router.navigate(['/login-page'])
+  }
 }
