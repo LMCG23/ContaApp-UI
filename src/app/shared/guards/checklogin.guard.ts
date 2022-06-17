@@ -18,6 +18,7 @@ export class CheckloginGuard implements CanActivate {
     // } else {
     //   this.router.navigate(['/Dashboard']);
     // }
+
     return this.authSvc.isLogged.pipe(take(1),map((isLogged)=>isLogged));
   }
 
