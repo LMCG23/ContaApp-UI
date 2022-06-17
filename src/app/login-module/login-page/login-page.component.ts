@@ -41,12 +41,12 @@ export class LoginPageComponent implements OnInit {
     }
 
 
-    this.authService.login(user);
-    this.router.navigate(['/dashboard'])
-    // this.authService.login(user).subscribe(res=>{
-    //   if(res){
-    //     this.router.navigate(['/dashboard'])
-    //   }
-    // })
+
+
+    this.authService.login(user).subscribe(res=>{
+      if(res){
+        this.router.navigate(['/dashboard'])
+      }
+    })
   }
 }

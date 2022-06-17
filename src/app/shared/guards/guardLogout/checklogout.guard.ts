@@ -13,11 +13,6 @@ export class ChecklogoutGuard implements CanActivate {
   canActivate():Observable<boolean>
   {
 
-    // if(this.authSvc.isloggedIn === false) {
-    //   this.router.navigate(['/login-page']);
-    // } else {
-    //   this.router.navigate(['/Dashboard']);
-    // }
 
     return this.authSvc.isLogged.pipe(take(1),map((isLogged)=>!isLogged));
 
