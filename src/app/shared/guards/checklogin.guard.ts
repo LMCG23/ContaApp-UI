@@ -9,17 +9,21 @@ import { AuthserviceService } from '../authentication/authservice.service';
 })
 export class CheckloginGuard implements CanActivate {
 
-  constructor(@Inject (AuthserviceService) private authSvc:AuthserviceService,private router:Router){}
+  constructor(private authSvc:AuthserviceService,private router:Router){}
 
-  canActivate():Observable<boolean>
-  {
-    // if(this.authSvc.isloggedIn === false) {
-    //   this.router.navigate(['/login-page']);
-    // } else {
-    //   this.router.navigate(['/Dashboard']);
-    // }
+  canActivate(): Observable< boolean> {
 
-    return this.authSvc.isLogged.pipe(take(1),map((isLogged)=>isLogged));
+    const getLoggin = this.authSvc.isLogged.pipe(
+      take(1)
+    );
+
+    const subs = getLoggin.subscribe((val:Boolean) => {if(val==true){
+      this.router.navigate(['/dashboard'])}} )
+
+    return this.authSvc.isLogged.pipe(
+      take(1),
+      map((isLogged: any) => (!isLogged ? true : false))
+    );
   }
 
 }

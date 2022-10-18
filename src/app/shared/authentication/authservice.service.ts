@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 import { User } from '../models/user';
 import { UserResponse } from '../models/userResponse';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import { environment } from '../../../environments/environment';
 
 const helper = new JwtHelperService;
 
@@ -14,84 +14,63 @@ const helper = new JwtHelperService;
 })
 export class AuthserviceService {
 
-private readonly loginEndpoint = environment.webApi + 'Authorization/login'
-
   private loggedIn = new BehaviorSubject<boolean>(false);
 
-   isloggedIn:boolean = false
-
-  get isLogged():Observable<boolean>{
-      return this.loggedIn.asObservable();
-  }
-
+  private readonly loginEndpoint = environment.webApi + 'Authorization/login'
 
   constructor(private http:HttpClient) {
     this.checkToken();
+
   }
 
-  /**
-   *  this method call to the API to authenticate the user
-   * @returns Observable<UserResponse> the user with the autentication
-   *
-   */
-    login(authData:User):Observable<UserResponse | void>{
-      return this.http.post<UserResponse>(this.loginEndpoint,authData).pipe(map((res:UserResponse)=>{
-        this.saveToken(res.token);
-        this.loggedIn.next(true);
-        this.isloggedIn = true;
-        return res;
-      }), catchError((err)=>this.handleError(err))
-      )
-    }
+  get isLogged():Observable<boolean>{
+    return this.loggedIn.asObservable();
+  }
+
+  login(user:User):Observable<any>{
+
+    return this.http.post<UserResponse>(this.loginEndpoint,user).pipe(map((res:UserResponse)=>{
+      this.saveToken(res.token || '');
+      this.loggedIn.next(true);
+      return res;
+    } ), catchError((err) => this.handleError(err)))
+
+  }
+
+  logout():void{
+    localStorage.removeItem('token');
+    this.loggedIn.next(false);
+  }
 
 
+  private checkToken():void{
+    const userToken = localStorage.getItem('token');
+    if(userToken){
+      const isExpired = helper.isTokenExpired(userToken || '{}')
 
-   /**
-   *  this method do the logout of the app
-   *
-   *
-   */
-    logout():void{
-      localStorage.removeItem('token');
-      this.loggedIn.next(false);
-      this.isloggedIn = false;
-    }
-
-     /**
-     *  this method is in charge of read the token that we get from the API
-     *
-     *
-     */
-    private checkToken():void{
-      const userToken = localStorage.getItem('token')?.toString();
-      const isExpired =  helper.isTokenExpired(userToken);
-      if(!isExpired){
-        this.logout();
+      if(isExpired){
+        this.logout()
       } else {
         this.loggedIn.next(true);
       }
     }
-
-   /**
-   *  this method is in charge of save the token that we get from the API in the localStorage
-   *
-   *
-   */
-  private saveToken(token:string):void {
-    localStorage.setItem('token',token)
   }
 
-  /**
-   *  this method is in charge of handle the errors
-   *
-   */
+
+  private saveToken(token:string):void{
+    localStorage.setItem('token',token);
+
+  }
+
+
+
   private handleError(err:any):Observable<never>{
-    let errorMessage = 'Ha sucedido un error al recuperar la informacion';
-    if(err){
-      errorMessage = `Error code: ${err.message}`
-    }
-    window.alert(errorMessage);
-    return throwError(errorMessage);
+    let errorMessge = 'An error ocurred retriving data';
+      if(err){
+        errorMessge = `Error: code ${err.message} `
+      }
+    window.alert(errorMessge);
+    return throwError(errorMessge);
   }
 
 }

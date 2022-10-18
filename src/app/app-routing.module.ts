@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { FullComponent } from './layouts/full/full.component';
+import { CheckIsLoggedGuard } from './shared/guards/checkIsLogged/check-is-logged.guard';
 import { CheckloginGuard } from './shared/guards/checklogin.guard';
-import { ChecklogoutGuard } from './shared/guards/guardLogout/checklogout.guard';
 
 
 export const Approutes: Routes = [
@@ -13,20 +13,20 @@ export const Approutes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-        canActivate:[CheckloginGuard],
+        canActivate:[CheckIsLoggedGuard]
       },
 
       {
         path: 'component',
         loadChildren: () => import('./component/component.module').then(m => m.ComponentsModule),
-        canActivate:[CheckloginGuard],
+        canActivate:[CheckIsLoggedGuard]
       }
     ]
   },
 
     {path:'login-page',
     loadChildren:() => import('./login-module/login-module.module').then(m =>m.LoginModuleModule),
-    canActivate:[ChecklogoutGuard],
+    canActivate:[CheckloginGuard],
     },
 
 
