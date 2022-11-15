@@ -1,7 +1,7 @@
 import { Base } from "./Base";
 
 export class AccountingFirm extends Base  {
-  Id:number = 0;
-  Name:string = '';
+  id:number = 0;
+  name:string = '';
 }
 

@@ -2,13 +2,14 @@ import { Base } from "./Base";
 import { Roles } from "./Enums/Roles.enum";
 
 export class User extends Base {
-   Id:number = 0;
-   AccountingFirmId:number = 0;
-   Name:string = '';
-   LastName:string = '';
-   Email:string = '';
-   UserName:string = '';
-   Password:string = '';
-   Token?:string = '';
-   Rol:Roles;
+   id?:number = 0;
+   accountingFirmId?:number = 0;
+   name?:string = '';
+   lastName?:string = '';
+   email?:string = '';
+   userName:string = '';
+   password:string = '';
+   token?:string = '';
+   rol?:Roles;
+
 }

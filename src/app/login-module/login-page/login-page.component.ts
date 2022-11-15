@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../../shared/models/User';
+
 import { AuthserviceService } from '../../shared/authentication/authservice.service';
 
 
@@ -35,17 +37,15 @@ export class LoginPageComponent implements OnInit {
   * this method do the login behaviour
   */
   onLogin(){
-    const user:any = {
-      userName: this.loginForm.controls.userName.value,
-      password:this.loginForm.controls.password.value,
-    }
-
-
-
-
+    const user:User = new User();
+      user.userName = this.loginForm.controls.userName.value,
+      user.password = this.loginForm.controls.password.value,
     this.authService.login(user).subscribe(res=>{
-      if(res){
+      if(res.operationSuccess && res.data){
         this.router.navigate(['/dashboard'])
+      } else {
+       // create a custom alert to show errors messages
+        alert(res.messages[0].text);
       }
     })
   }

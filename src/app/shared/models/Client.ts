@@ -1,13 +1,13 @@
 import { Base } from "./Base";
 
 export class Client extends Base {
- Id:number = 0;
- AccountingFirmId:number =0;
- Name:string = '';
- Dni:string='';
- LastName:string='';
- IsLegalPerson:boolean=false;
- HasMate:boolean=false;
- Children?:number;
- IsSalaried:boolean = false;
+ id:number = 0;
+ accountingFirmId:number =0;
+ name:string = '';
+ dni:string='';
+ lastName:string='';
+ isLegalPerson:boolean=false;
+ hasMate:boolean=false;
+ children?:number;
+ isSalaried:boolean = false;
 }
