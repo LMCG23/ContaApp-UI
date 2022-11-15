@@ -1,7 +1,8 @@
 import { MessageInfo } from "./MessageInfo";
 
-export class response {
-  HasErrors:boolean = false;
-  Messages:  Array<MessageInfo>
-  OperationSuccess:boolean = true;
+export class Response {
+  hasErrors:boolean = false;
+  messages:  Array<MessageInfo> = new Array<MessageInfo>();
+  operationSuccess:boolean = true;
+  data:any;
 }

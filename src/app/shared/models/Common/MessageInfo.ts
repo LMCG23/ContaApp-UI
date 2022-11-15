@@ -1,7 +1,7 @@
 import { MessageTypeEnum } from "../Enums/MessageTypeEnum.Enum";
 
 export class MessageInfo {
-  Type:MessageTypeEnum = MessageTypeEnum.None;
-  Code:string  = '';
-  Text:string = '';
+  type:MessageTypeEnum = MessageTypeEnum.None;
+  code:string  = '';
+  text:string = '';
 }

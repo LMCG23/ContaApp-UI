@@ -1,7 +1,7 @@
 export class Base {
-	CreatedBy:string = '';
-	ModifiedBy:string = '';
-	CreatedTS:Date = new Date();
-	ModifiedTS:Date = new Date();
-	IsActive:boolean = false;
+	createdBy?:string = '';
+	modifiedBy?:string = '';
+	createdTS?:Date = new Date();
+	modifiedTS?:Date = new Date();
+	isActive?:boolean = false;
 }
