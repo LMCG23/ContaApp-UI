@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Employee, Product, TableRows, TopSelling } from '../../../component/table/table-data';
+
+
 
 @Component({
   selector: 'app-activity',
@@ -6,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./activity.component.scss']
 })
 export class ActivityComponent implements OnInit {
+  topSelling:Product[];
 
-  constructor() { }
+  trow:TableRows  [];
 
-  ngOnInit(): void {
+  constructor() {
+
+    this.topSelling=TopSelling;
+
+    this.trow=Employee;
   }
+
+ngOnInit(): void {
+
+}
 
 }
