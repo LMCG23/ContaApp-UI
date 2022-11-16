@@ -4,8 +4,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { User } from '../models/user';
-import { UserResponse } from '../models/userResponse';
+import { Response } from '../models/Common/Response';
+import { User } from '../models/User';
 
 const helper = new JwtHelperService;
 
@@ -16,7 +16,7 @@ export class AuthserviceService {
 
   private loggedIn = new BehaviorSubject<boolean>(false);
 
-  private readonly loginEndpoint = environment.webApi + 'Authorization/login'
+  private readonly loginEndpoint = environment.webApi + 'Authentication/login'
 
   constructor(private http:HttpClient) {
     this.checkToken();
@@ -27,10 +27,9 @@ export class AuthserviceService {
     return this.loggedIn.asObservable();
   }
 
-  login(user:User):Observable<any>{
-
-    return this.http.post<UserResponse>(this.loginEndpoint,user).pipe(map((res:UserResponse)=>{
-      this.saveToken(res.token || '');
+  login(user:User):Observable<Response>{
+    return this.http.post<Response>(this.loginEndpoint,user).pipe(map((res:Response)=>{
+      this.saveToken(res.data.token || '');
       this.loggedIn.next(true);
       return res;
     } ), catchError((err) => this.handleError(err)))
