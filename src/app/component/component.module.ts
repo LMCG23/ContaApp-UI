@@ -22,8 +22,8 @@ import { TableComponent } from "./table/table.component";
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-
   ],
+  exports:[],
   declarations: [
     NgbdpaginationBasicComponent,
     NgbdAlertBasicComponent,
