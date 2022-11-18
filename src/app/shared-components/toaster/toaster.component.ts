@@ -1,17 +1,15 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { EventTypes } from '../models/Enums/EventTypes';
 import { Toast } from 'bootstrap';
-
+import { EventTypes } from '.././../shared/models/Enums/EventTypes';
 
 @Component({
-  selector: 'app-toast',
-  templateUrl: './toast.component.html',
-  styleUrls: ['./toast.component.scss']
+  selector: 'app-toaster',
+  templateUrl: './toaster.component.html',
+  styleUrls: ['./toaster.component.scss']
 })
-export class ToastComponent implements OnInit {
-
+export class ToasterComponent implements OnInit {
   @Output() disposeEvent = new EventEmitter();
 
   @ViewChild('toastElement', { static: true })
@@ -55,5 +53,6 @@ export class ToastComponent implements OnInit {
     this.toast.dispose();
     this.disposeEvent.emit();
   }
+
 
 }

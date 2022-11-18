@@ -16,8 +16,6 @@ import { FullComponent } from './layouts/full/full.component';
 import { NavigationComponent } from './shared/header/navigation.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { SpinnerComponent } from './shared/spinner.component';
-import { ToasterComponent } from './shared/toaster/toaster.component';
-import { ToastComponent } from './shared/toast/toast.component';
 
 
 
@@ -35,9 +33,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FullComponent,
     NavigationComponent,
     SidebarComponent,
-    ToasterComponent,
-    ToastComponent,
-
   ],
   imports: [
     CommonModule,
@@ -50,10 +45,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RouterModule.forRoot(Approutes, { useHash: false, relativeLinkResolution: 'legacy' }),
     PerfectScrollbarModule,
     HttpClientModule
-  ],
-  exports:[
-    ToasterComponent,
-    ToastComponent,
   ],
   providers: [
     {

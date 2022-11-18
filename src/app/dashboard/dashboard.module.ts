@@ -9,7 +9,7 @@ import { FeedsComponent } from "./dashboard-components/feeds/feeds.component";
 import { TopSellingComponent } from "./dashboard-components/top-selling/top-selling.component";
 import { TopCardsComponent } from "./dashboard-components/top-cards/top-cards.component";
 import { BlogCardsComponent } from "./dashboard-components/blog-cards/blog-cards.component";
-import { AppModule } from "../app.module";
+import { SharedComponentsModule } from "../shared-components/shared-components.module";
 
 
 const routes: Routes = [
@@ -30,7 +30,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     NgApexchartsModule,
-    // AppModule
+    SharedComponentsModule
   ],
   declarations: [
     DashboardComponent,

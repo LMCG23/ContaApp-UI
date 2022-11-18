@@ -1,13 +1,13 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { ToastEvent } from '../../shared/models/Common/Toast-Event';
-import { ToastService } from '../toastService/toast.service';
+import { ToastService } from '../../shared/toastService/toast.service';
 
 @Component({
-  selector: 'app-toaster',
-  templateUrl: './toaster.component.html',
-  styleUrls: ['./toaster.component.scss']
+  selector: 'app-toaster-container',
+  templateUrl: './toaster-container.component.html',
+  styleUrls: ['./toaster-container.component.scss']
 })
-export class ToasterComponent  {
+export class ToasterContainerComponent  {
 
   currentToasts: ToastEvent[] = [];
 
