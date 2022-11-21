@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { ToastEvent } from '../models/Common/Toast-Event';
-import { EventTypes } from '../models/Enums/EventTypes';
+import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
+import { ToastEvent } from "../models/Common/Toast-Event";
+import { EventTypes } from "../models/Enums/EventTypes";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ToastService {
   toastEvents: Observable<ToastEvent>;
