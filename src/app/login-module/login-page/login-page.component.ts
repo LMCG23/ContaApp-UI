@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../../shared/models/User';
-
+import { ToastService } from '../../shared/toastService/toast.service';
 import { AuthserviceService } from '../../shared/authentication/authservice.service';
+import { User } from '../../shared/models/User';
 
 
 
@@ -17,7 +17,11 @@ export class LoginPageComponent implements OnInit {
 
   loginForm:FormGroup = new FormGroup({});
 
-  constructor(@Inject(AuthserviceService) private authService:AuthserviceService,private router:Router) { }
+  constructor(
+    @Inject(AuthserviceService) private authService:AuthserviceService,
+   @Inject(ToastService) private toastService: ToastService,
+   private router:Router,
+  ) { }
 
   ngOnInit(): void {
   this.buildFormGroup();
@@ -44,8 +48,7 @@ export class LoginPageComponent implements OnInit {
       if(res.operationSuccess && res.data){
         this.router.navigate(['/dashboard'])
       } else {
-       // create a custom alert to show errors messages
-        alert(res.messages[0].text);
+        this.toastService.showErrorToast('Error al iniciar sesión', 'El usuario o la contraseña no son correctos');
       }
     })
   }

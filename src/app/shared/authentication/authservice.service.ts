@@ -29,7 +29,7 @@ export class AuthserviceService {
 
   login(user:User):Observable<Response>{
     return this.http.post<Response>(this.loginEndpoint,user).pipe(map((res:Response)=>{
-      this.saveToken(res.data.token || '');
+      this.saveLocalStorage(res.data.token || '',res.data.accountingFirmId,res.data.userName,res.data.lastName,res.data.name);
       this.loggedIn.next(true);
       return res;
     } ), catchError((err) => this.handleError(err)))
@@ -37,13 +37,13 @@ export class AuthserviceService {
   }
 
   logout():void{
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.loggedIn.next(false);
   }
 
 
   private checkToken():void{
-    const userToken = localStorage.getItem('token');
+    const userToken = localStorage.getItem(environment.localStorage.token);
     if(userToken){
       const isExpired = helper.isTokenExpired(userToken || '{}')
 
@@ -56,9 +56,12 @@ export class AuthserviceService {
   }
 
 
-  private saveToken(token:string):void{
-    localStorage.setItem('token',token);
-
+  private saveLocalStorage(token:string,userAccountingFirm:string,userName:string,userLastName:string,name:string):void{
+    localStorage.setItem(environment.localStorage.token,token);
+    localStorage.setItem(environment.localStorage.userAccountingFirm,userAccountingFirm);
+    localStorage.setItem(environment.localStorage.userName,userName);
+    localStorage.setItem(environment.localStorage.userLastName,userLastName);
+    localStorage.setItem(environment.localStorage.nameOfuser,name);
   }
 
 
