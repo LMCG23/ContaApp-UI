@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, EventEmitter, Output, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../../../environments/environment';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AuthserviceService } from '../authentication/authservice.service';
 
@@ -12,7 +13,7 @@ declare var $: any;
 })
 export class NavigationComponent implements AfterViewInit {
   @Output() toggleSidebar = new EventEmitter<void>();
-
+  public userName :string = '';
   public config: PerfectScrollbarConfigInterface = {};
 
   public showSearch = false;
@@ -113,7 +114,11 @@ export class NavigationComponent implements AfterViewInit {
     icon: 'de'
   }]
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+    this.userName = `${localStorage.getItem(environment.localStorage.nameOfuser)} ${localStorage.getItem(environment.localStorage.userLastName)}`
+
+
+  }
 
   logout(){
 this.authSvs.logout();
