@@ -1,4 +1,5 @@
 export class ResultHelper {
-  Value:any;
-  Error:Array<string> = new Array<string>();
+  value: any;
+  success: boolean = true;
+  errors: Array<string> = new Array<string>();
 }

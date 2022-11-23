@@ -5,16 +5,16 @@
 export const environment = {
   production: false,
   // webApi:'https://localhost:44313/'
-  webApi:'https://localhost:7149/api/',
+  webApi: "https://localhost:7149/api/",
 
-  localStorage : {
-    token:'Token',
-    userName:'UserName',
-    userLastName:'UserLastName',
-    userAccountingFirm:'UserAccountingFirm',
-    nameOfuser:'NameOfUser'
-  }
-
+  localStorage: {
+    token: "Token",
+    userName: "UserName",
+    userLastName: "UserLastName",
+    userAccountingFirm: "UserAccountingFirm",
+    nameOfuser: "NameOfUser",
+    userId: "UserId",
+  },
 };
 
 /*

@@ -2,11 +2,17 @@
 <app-toaster-container></app-toaster-container>
 <div class="container bootstrap snippets bootdey">
   <h1 class="text-primary">Editar Perfil</h1>
-  <hr />
-  <div class="row">
-    <h3>Información Personal</h3>
-    <!-- left column -->
-    <!-- <div class="col-md-3">
+  <form
+    class="form-horizontal"
+    role="form"
+    [formGroup]="profileForm"
+    (ngSubmit)="updateUser()"
+  >
+    <hr />
+    <div class="row">
+      <h3>Información Personal</h3>
+      <!-- left column -->
+      <!-- <div class="col-md-3">
       <div class="text-center">
         <img
           src="https://bootdey.com/img/Content/avatar/avatar7.png"
@@ -17,52 +23,57 @@
 
         <input type="file" class="form-control" />
       </div>
-    </div> -->
+      </div> -->
 
-    <!-- edit form column -->
-    <div class="col-md-9 personal-info">
-      <form class="form-horizontal" role="form">
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
         <div class="form-group">
           <label class="col-lg-3 control-label">Nombre:</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" value="" />
+            <input
+              formControlName="nameOfUser"
+              id="inputNameOfUser"
+              class="form-control"
+              type="text"
+            />
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Apellido:</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" value="" />
+            <input
+              formControlName="userLastName"
+              id="inputUserLastName"
+              class="form-control"
+              type="text"
+            />
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Correo Electrónico:</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" value="" />
+            <input
+              formControlName="userEmail"
+              id="inputUserEmail"
+              class="form-control"
+              type="text"
+              value=""
+            />
           </div>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
-  <hr />
-  <div class="row">
-    <h3>Información del Usuario</h3>
-    <!-- edit form column -->
-    <div class="col-md-9 personal-info">
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Nombre de usuario:</label>
-          <div class="col-lg-8">
-            <input class="form-control" type="text" value="" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Contraseña:</label>
-          <div class="col-lg-8">
-            <input class="form-control" type="text" value="" />
-          </div>
-        </div>
-      </form>
+    <div class="row d-flex justify-content-end mt-4">
+      <div class="col-md-9">
+        <button
+          type="submit"
+          class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+        >
+          Guardar
+        </button>
+      </div>
     </div>
-  </div>
+  </form>
 </div>
+
 <hr />
