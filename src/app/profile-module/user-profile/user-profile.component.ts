@@ -101,6 +101,7 @@ export class UserProfileComponent implements OnInit {
           }
         });
     } else {
+      this.profileForm.markAllAsTouched();
       this.toastService.showErrorToast(
         "Error al actualizar el usuario",
         "Campos requeridos"
