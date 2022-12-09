@@ -1,6 +1,34 @@
 export class InquiryResquest {
-	PageSize :number = 25;
-	PageNumber :number=1;
-	WithPaging :boolean = true;
-	AccountingFirmId:number = 0;
+  pageSize: number = 25;
+  pageNumber: number = 1;
+  withPaging: boolean = true;
+  accountingFirmId: number = 0;
+
+  constructor(paging: boolean = true, size: number = 20, num: number = 1) {
+    this.pageSize = size;
+    this.pageNumber = num;
+    this.withPaging = paging;
+  }
+
+  /**
+   * Gets the current instance of the request filters,parses into an get style querystring and returns it
+   * @returns string
+   */
+  parseQueryString(): string {
+    let parsedString = "?";
+    const arrayToParse = [];
+
+    arrayToParse.push(`pageSize=${this.pageSize}`);
+    arrayToParse.push(`pageNumber=${this.pageNumber}`);
+    arrayToParse.push(`withPaging=${this.withPaging}`);
+
+    // site id is nullabe, need to check if the field has content before parsing
+    this.accountingFirmId
+      ? arrayToParse.push(`accountingFirmId=${this.accountingFirmId}`)
+      : null;
+
+    parsedString += arrayToParse.join("&");
+
+    return parsedString;
+  }
 }
