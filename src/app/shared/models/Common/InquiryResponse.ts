@@ -1,9 +1,8 @@
+import { Response } from "./Response";
+
 export class InquiryResponse extends Response {
-  returnValues:Array<any> = new Array<any>();
-  HasMorePages:boolean =true;
-  TotalItems:number = 0;
-  PageReturned:number = 0;
-
-
-
+  returnValues: Array<any> = new Array<any>();
+  hasMorePages: boolean = true;
+  totalItems: number = 0;
+  pageReturned: number = 0;
 }
