@@ -9,13 +9,15 @@ import { InquiryResquest } from "../../shared/models/Common/InquiryRequest";
   providedIn: "root",
 })
 export class AdminService {
-  private readonly userEndpoint = environment.webApi + "Activity";
-
+  // Activity Endpoint
+  private readonly activityEndpoint = environment.webApi + "Activity";
+  //Client Enpoint
+  private readonly clientEndpoint = environment.webApi + "Client";
   constructor(private http: HttpClient) {}
 
   /**
-   * this method allow to get an user by the id
-   * @param {id:number} the id to get the user
+   * this method allow to get all activityes by acounting firm id
+   * @param {inquiryRequest:InquiryResquest} the request to fetch the data
    * @returns {Observable<ResultHelper>}
    */
 
@@ -24,7 +26,21 @@ export class AdminService {
   ): Observable<InquiryResponse> {
     const request = inquiryRequest.parseQueryString();
 
-    const url = `${this.userEndpoint}/All${request}`;
+    const url = `${this.activityEndpoint}/All${request}`;
+    return this.http.get<InquiryResponse>(url);
+  }
+
+  /**
+   * this method allow to get all clients by acounting firm id
+   * @param {inquiryRequest:InquiryResquest} the request to fetch the data
+   * @returns {Observable<ResultHelper>}
+   */
+  getAllClientsByAccoutingFirmId(
+    inquiryRequest: InquiryResquest
+  ): Observable<InquiryResponse> {
+    const request = inquiryRequest.parseQueryString();
+
+    const url = `${this.clientEndpoint}/All${request}`;
     return this.http.get<InquiryResponse>(url);
   }
 }

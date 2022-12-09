@@ -19,10 +19,6 @@ import { AdminService } from "../../service/admin.service";
   styleUrls: ["./activity.component.scss"],
 })
 export class ActivityComponent implements OnInit {
-  topSelling: Product[];
-
-  trow: TableRows[];
-
   //List of Activities
   public activityList: Array<Activity> = new Array<Activity>();
 
@@ -32,11 +28,7 @@ export class ActivityComponent implements OnInit {
     @Inject(MessageService) private messageService: MessageService,
     private adminService: AdminService,
     @Inject(ToastService) private toastService: ToastService
-  ) {
-    this.topSelling = TopSelling;
-
-    this.trow = Employee;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.accountingId = parseInt(
@@ -50,7 +42,6 @@ export class ActivityComponent implements OnInit {
   public fetchAllActivitiesByAcountingFirmId(): void {
     let request: InquiryResquest = new InquiryResquest();
     request.accountingFirmId = this.accountingId;
-    debugger;
     this.adminService
       .getAllActivitiesByAccoutingFirmId(request)
       .subscribe((result: InquiryResponse) => {
