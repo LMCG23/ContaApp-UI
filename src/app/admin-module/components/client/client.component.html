@@ -1,1 +1,97 @@
-<p>client works!</p>
+<div class="row mt-4 p-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Lista de Clientes</h4>
+        <div class="row col-md-6">
+          <div class="col-md-4">
+            <button type="button" class="btn btn-primary">
+              <i class="fa-solid fa-plus"></i> Agregar
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-middle text-nowrap">
+            <thead>
+              <tr>
+                <th class="text-dark font-medium fs-4">Cédula</th>
+                <th class="text-dark font-medium fs-4">Nombre</th>
+                <th class="text-dark font-medium fs-4">Apellido</th>
+                <th class="text-dark font-medium fs-4">Personeria</th>
+                <th class="text-dark font-medium fs-4">Tiene Pareja</th>
+                <th class="text-dark font-medium fs-4">Tiene Hijos</th>
+                <th class="text-dark font-medium fs-4">Asalariado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of clientList">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">{{ a.dni }}</h5>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">{{ a.name }}</h5>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">{{ a.lastName }}</h5>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">
+                        {{ a.isLegalPerson ? "Fisica" : "Juridica" }}
+                      </h5>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">
+                        {{ a.hasMate ? "Si" : "No" }}
+                      </h5>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">
+                        {{ a.children ? "Si" : "No" }}
+                      </h5>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">
+                        {{ a.isSalaried ? "Si" : "No" }}
+                      </h5>
+                    </div>
+                  </div>
+                </td>
+                <td class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-primary">
+                    <i class="fa fa-pencil"></i> editar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
