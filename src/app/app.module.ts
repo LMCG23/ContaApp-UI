@@ -51,6 +51,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     }),
     PerfectScrollbarModule,
     HttpClientModule,
+    NgbModule,
   ],
   providers: [
     {

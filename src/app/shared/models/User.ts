@@ -1,3 +1,4 @@
+import { AccountingFirm } from "./AccountingFirm";
 import { Base } from "./Base";
 import { Roles } from "./Enums/Roles.enum";
 
