@@ -1,11 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ResultHelper } from "../../../shared/models/Common/ResultHelper";
 import { environment } from "../../../../environments/environment";
-import {
-  Employee,
-  Product,
-  TableRows,
-  TopSelling,
-} from "../../../component/table/table-data";
 import { MessageService } from "../../../shared/message/message.service";
 import { Activity } from "../../../shared/models/Activity";
 import { InquiryResquest } from "../../../shared/models/Common/InquiryRequest";
@@ -24,10 +21,18 @@ export class ActivityComponent implements OnInit {
 
   //Variables
   accountingId: number = 0;
+  closeResult: string = "";
+  modalTitle: string = "";
+  activityForm: FormGroup = new FormGroup({});
+
+  //management activity variables
+  managementActivity: Activity = new Activity();
+
   constructor(
     @Inject(MessageService) private messageService: MessageService,
     private adminService: AdminService,
-    @Inject(ToastService) private toastService: ToastService
+    @Inject(ToastService) private toastService: ToastService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +41,7 @@ export class ActivityComponent implements OnInit {
     );
     if (this.accountingId) {
       this.fetchAllActivitiesByAcountingFirmId();
+      this.buildFormGroup();
     }
   }
 
@@ -54,5 +60,127 @@ export class ActivityComponent implements OnInit {
           );
         }
       });
+  }
+
+  /**
+   * this method allow to build the form group
+   * @returns {void}
+   */
+  buildFormGroup() {
+    this.activityForm = new FormGroup({
+      activityName: new FormControl(null, [Validators.required]),
+    });
+  }
+
+  /**
+   * this method allow open the modal
+   * @returns {void}
+   */
+  open(content: any, activity?: Activity): void {
+    if (activity) {
+      this.managementActivity = activity;
+      this.activityForm.controls.activityName.setValue(activity.name);
+      this.modalTitle = `Editar Actividad ${activity.name}`;
+      this.modalService
+        .open(content, { ariaLabelledBy: "modal-basic-title" })
+        .result.then(
+          (result) => {
+            this.closeResult = `Closed with: ${result}`;
+          },
+          (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          }
+        );
+    } else {
+      this.modalTitle = `Nueva Actividad`;
+      this.modalService
+        .open(content, { ariaLabelledBy: "modal-basic-title" })
+        .result.then(
+          (result) => {
+            this.closeResult = `Closed with: ${result}`;
+          },
+          (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          }
+        );
+    }
+  }
+
+  /**
+   * this method allow to get Dismiss Reason
+   * @param {reason:any}  the reason
+   * @returns {void}
+   */
+  private getDismissReason(reason: any): string {
+    this.activityForm.controls.activityName.setValue("");
+    this.managementActivity = new Activity();
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  /**
+   * this method allow create or update the activity
+   * @param {reason:any}  the reason
+   * @returns {void}
+   */
+  private UpdateCreateActivity() {
+    this.managementActivity.name =
+      this.activityForm.controls.activityName.value;
+    this.managementActivity.accountingFirmId = this.accountingId;
+    this.managementActivity.isActive = true;
+    this.managementActivity.createdBy =
+      localStorage.getItem(environment.localStorage.userName) || "";
+    this.managementActivity.modifiedBy =
+      localStorage.getItem(environment.localStorage.userName) || "";
+    if (this.managementActivity.id !== 0) {
+      this.adminService
+        .updateActivity(this.managementActivity)
+        .subscribe((response: ResultHelper) => {
+          if (response.success) {
+            this.toastService.showSuccessToast(
+              "Actulización de Actividad",
+              "La Actividad se actualizó correctamente"
+            );
+            this.fetchAllActivitiesByAcountingFirmId();
+          } else {
+            this.toastService.showErrorToast(
+              "Actulización de Actividad",
+              `${response.errors[0]}`
+            );
+          }
+        });
+    } else {
+      this.adminService
+        .createActivity(this.managementActivity)
+        .subscribe((response: ResultHelper) => {
+          if (response.success) {
+            this.toastService.showSuccessToast(
+              "Nueva Actividad",
+              "La Actividad se creó correctamente"
+            );
+            this.fetchAllActivitiesByAcountingFirmId();
+          } else {
+            this.toastService.showErrorToast(
+              "Nueva de Actividad",
+              `${response.errors[0]}`
+            );
+          }
+        });
+    }
+  }
+
+  public saveActivity() {
+    if (this.activityForm.valid) {
+      this.UpdateCreateActivity();
+      this.modalService.dismissAll();
+    } else {
+      this.activityForm.markAllAsTouched();
+      this.toastService.showErrorToast("Error", "Campos requeridos");
+    }
   }
 }

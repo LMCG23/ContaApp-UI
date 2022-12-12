@@ -4,6 +4,8 @@ import { InquiryResponse } from "../../shared/models/Common/InquiryResponse";
 import { environment } from "../../../environments/environment";
 import { Observable } from "rxjs";
 import { InquiryResquest } from "../../shared/models/Common/InquiryRequest";
+import { Activity } from "../../shared/models/Activity";
+import { ResultHelper } from "../../shared/models/Common/ResultHelper";
 
 @Injectable({
   providedIn: "root",
@@ -42,5 +44,27 @@ export class AdminService {
 
     const url = `${this.clientEndpoint}/All${request}`;
     return this.http.get<InquiryResponse>(url);
+  }
+
+  /**
+   * this method allow to update an activity
+   * @param {activity:Activity} the Activity to be updated
+   * @returns {Observable<ResultHelper>}
+   */
+
+  updateActivity(activity: Activity): Observable<ResultHelper> {
+    const url = `${this.activityEndpoint}`;
+    return this.http.put<ResultHelper>(url, activity);
+  }
+
+  /**
+   * this method allow to update an activity
+   * @param {activity:Activity}  the Activity to be created
+   * @returns {Observable<ResultHelper>}
+   */
+
+  createActivity(activity: Activity): Observable<ResultHelper> {
+    const url = `${this.activityEndpoint}`;
+    return this.http.post<ResultHelper>(url, activity);
   }
 }

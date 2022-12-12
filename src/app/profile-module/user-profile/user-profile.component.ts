@@ -33,10 +33,11 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  /*
-   * this method build the formGroup
+  /**
+   * this method allow to build the form group
+   * @returns {void}
    */
-  buildFormGroup() {
+  buildFormGroup(): void {
     this.profileForm = new FormGroup({
       nameOfUser: new FormControl(null, [Validators.required]),
       userLastName: new FormControl(null, [Validators.required]),
@@ -44,12 +45,20 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  fillFormGroup(values: ResultHelper) {
+  /**
+   * this method allow to fill the form group
+   * @param {values:ResultHelper}  the Activity to be created
+   * @returns {void}
+   */
+  fillFormGroup(values: ResultHelper): void {
     this.profileForm.controls.nameOfUser.setValue(values.value.name);
     this.profileForm.controls.userLastName.setValue(values.value.lastName);
     this.profileForm.controls.userEmail.setValue(values.value.email);
   }
-
+  /**
+   * this method allow gets the user by the id
+   * @returns {void}
+   */
   public getUserById(): void {
     this.profileService
       .getUserById(this.userId)
@@ -65,8 +74,9 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  /*
-   * this update the user
+  /**
+   * this method allow to update the user
+   * @returns {void}
    */
   updateUser(): void {
     const user: User = new User();
@@ -77,6 +87,9 @@ export class UserProfileComponent implements OnInit {
     user.accountingFirmId = parseInt(
       localStorage.getItem(environment.localStorage.userAccountingFirm) || ""
     );
+    user.modifiedBy =
+      localStorage.getItem(environment.localStorage.userName) || "";
+    user.modifiedTS = new Date();
     if (this.profileForm.valid) {
       this.messageService
         .showAlertQuestion("Actualizar Usuario", "Desea actualizar el usuario?")
