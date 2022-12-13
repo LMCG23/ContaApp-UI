@@ -76,6 +76,7 @@ export class ClientComponent implements OnInit {
       clientLegalPerson: new FormControl(false),
       clientHasMate: new FormControl(false),
       clientIsSalaried: new FormControl(false),
+      clientActive: new FormControl(true),
     });
   }
 
@@ -219,7 +220,8 @@ export class ClientComponent implements OnInit {
     this.managementClient.accountingFirmId = parseInt(
       localStorage.getItem(environment.localStorage.userAccountingFirm) || ""
     );
-    this.managementClient.isActive = true;
+    this.managementClient.isActive =
+      this.clientForm.controls.clientActive.value;
     this.managementClient.accountingFirm = new AccountingFirm();
   }
 
@@ -236,5 +238,36 @@ export class ClientComponent implements OnInit {
       this.clientForm.markAllAsTouched();
       this.toastService.showErrorToast("Error", "Campos requeridos");
     }
+  }
+
+  /**
+   * this is called when the user select the delete button, make inactive the activity
+   * @param {reason:any}  the reason
+   * @returns {void}
+   */
+  public makeInactive(client: Client) {
+    this.messageService
+      .showAlertQuestion("Eliminar Cliente", "Desea eliminar el Cliente?")
+      .then((result: any) => {
+        client.isActive = false;
+        client.modifiedBy =
+          localStorage.getItem(environment.localStorage.userName) || "";
+        this.adminService
+          .updateActivity(client)
+          .subscribe((response: ResultHelper) => {
+            if (response.success) {
+              this.toastService.showSuccessToast(
+                "Eliminar Cliente",
+                "El Cliente se ha eliminado correctamente"
+              );
+              this.fetchAllClientsByAcountingFirmId();
+            } else {
+              this.toastService.showErrorToast(
+                "Eliminar Cliente",
+                `${response.errors[0]}`
+              );
+            }
+          });
+      });
   }
 }

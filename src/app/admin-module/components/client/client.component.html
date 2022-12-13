@@ -91,6 +91,13 @@
                 <td class="d-flex justify-content-end">
                   <button
                     type="button"
+                    class="btn btn-danger"
+                    (click)="makeInactive(a)"
+                  >
+                    <i class="fa fa-pencil"></i> Eliminar
+                  </button>
+                  <button
+                    type="button"
                     class="btn btn-primary"
                     (click)="open(content, a)"
                   >
@@ -122,6 +129,24 @@
   <div class="modal-body">
     <form [formGroup]="clientForm" class="form-horizontal" role="form">
       <div class="form-group required">
+        <div class="row">
+          <div class="d-flex justify-content-end">
+            <input
+              formControlName="clientActive"
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="has-active-check"
+            />
+            <label
+              class="form-check-label"
+              style="margin-left: 15px"
+              for="has-active-check"
+            >
+              Active
+            </label>
+          </div>
+        </div>
         <div class="row mt-2">
           <div class="col-md-6">
             <label class="control-label">Nombre:</label>
