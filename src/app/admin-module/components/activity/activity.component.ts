@@ -69,6 +69,7 @@ export class ActivityComponent implements OnInit {
   buildFormGroup() {
     this.activityForm = new FormGroup({
       activityName: new FormControl(null, [Validators.required]),
+      activityActive: new FormControl(true),
     });
   }
 
@@ -132,7 +133,8 @@ export class ActivityComponent implements OnInit {
     this.managementActivity.name =
       this.activityForm.controls.activityName.value;
     this.managementActivity.accountingFirmId = this.accountingId;
-    this.managementActivity.isActive = true;
+    this.managementActivity.isActive =
+      this.activityForm.controls.activityActive.value;
     this.managementActivity.createdBy =
       localStorage.getItem(environment.localStorage.userName) || "";
     this.managementActivity.modifiedBy =
@@ -174,6 +176,11 @@ export class ActivityComponent implements OnInit {
     }
   }
 
+  /**
+   * this is called when the user select the save button
+   * @param {reason:any}  the reason
+   * @returns {void}
+   */
   public saveActivity() {
     if (this.activityForm.valid) {
       this.UpdateCreateActivity();
@@ -182,5 +189,36 @@ export class ActivityComponent implements OnInit {
       this.activityForm.markAllAsTouched();
       this.toastService.showErrorToast("Error", "Campos requeridos");
     }
+  }
+
+  /**
+   * this is called when the user select the delete button, make inactive the activity
+   * @param {reason:any}  the reason
+   * @returns {void}
+   */
+  public makeInactive(activity: Activity) {
+    this.messageService
+      .showAlertQuestion("Eliminar Actividad", "Desea eliminar la actividad?")
+      .then((result: any) => {
+        activity.isActive = false;
+        activity.modifiedBy =
+          localStorage.getItem(environment.localStorage.userName) || "";
+        this.adminService
+          .updateActivity(activity)
+          .subscribe((response: ResultHelper) => {
+            if (response.success) {
+              this.toastService.showSuccessToast(
+                "Eliminar Actividad",
+                "La Actividad se ha eliminado correctamente"
+              );
+              this.fetchAllActivitiesByAcountingFirmId();
+            } else {
+              this.toastService.showErrorToast(
+                "Eliminar Actividad",
+                `${response.errors[0]}`
+              );
+            }
+          });
+      });
   }
 }
