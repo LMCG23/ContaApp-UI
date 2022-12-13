@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { InquiryResquest } from "../../shared/models/Common/InquiryRequest";
 import { Activity } from "../../shared/models/Activity";
 import { ResultHelper } from "../../shared/models/Common/ResultHelper";
+import { Client } from "../../shared/models/Client";
 
 @Injectable({
   providedIn: "root",
@@ -66,5 +67,29 @@ export class AdminService {
   createActivity(activity: Activity): Observable<ResultHelper> {
     const url = `${this.activityEndpoint}`;
     return this.http.post<ResultHelper>(url, activity);
+  }
+
+  /**
+   * this method allow to update an activity
+   * @param {client:Client}  the Activity to be created
+   * @returns {Observable<ResultHelper>}
+   */
+
+  updateClient(client: Client): Observable<ResultHelper> {
+    console.log(JSON.stringify(client));
+    const url = `${this.clientEndpoint}`;
+    return this.http.put<ResultHelper>(url, client);
+  }
+
+  /**
+   * this method allow to update an client
+   * @param {client:Client}  the Activity to be created
+   * @returns {Observable<ResultHelper>}
+   */
+
+  createClient(client: Client): Observable<ResultHelper> {
+    console.log(JSON.stringify(client));
+    const url = `${this.clientEndpoint}`;
+    return this.http.post<ResultHelper>(url, client);
   }
 }

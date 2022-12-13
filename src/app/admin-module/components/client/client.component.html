@@ -1,3 +1,5 @@
+<!-- Toaster -->
+<app-toaster-container></app-toaster-container>
 <div class="row mt-4 p-4">
   <div class="col-12">
     <div class="card">
@@ -5,7 +7,11 @@
         <h4 class="card-title">Lista de Clientes</h4>
         <div class="row col-md-6">
           <div class="col-md-4">
-            <button type="button" class="btn btn-primary">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="open(content)"
+            >
               <i class="fa-solid fa-plus"></i> Agregar
             </button>
           </div>
@@ -17,9 +23,9 @@
                 <th class="text-dark font-medium fs-4">Cédula</th>
                 <th class="text-dark font-medium fs-4">Nombre</th>
                 <th class="text-dark font-medium fs-4">Apellido</th>
-                <th class="text-dark font-medium fs-4">Personeria</th>
+                <th class="text-dark font-medium fs-4">Hijos</th>
+                <th class="text-dark font-medium fs-4">Personería</th>
                 <th class="text-dark font-medium fs-4">Tiene Pareja</th>
-                <th class="text-dark font-medium fs-4">Tiene Hijos</th>
                 <th class="text-dark font-medium fs-4">Asalariado</th>
               </tr>
             </thead>
@@ -50,6 +56,15 @@
                   <div class="d-flex align-items-center">
                     <div class="ms-3">
                       <h5 class="mb-0 font-medium">
+                        {{ a.children }}
+                      </h5>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">
                         {{ a.isLegalPerson ? "Fisica" : "Juridica" }}
                       </h5>
                     </div>
@@ -68,23 +83,18 @@
                   <div class="d-flex align-items-center">
                     <div class="ms-3">
                       <h5 class="mb-0 font-medium">
-                        {{ a.children ? "Si" : "No" }}
-                      </h5>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <div class="ms-3">
-                      <h5 class="mb-0 font-medium">
                         {{ a.isSalaried ? "Si" : "No" }}
                       </h5>
                     </div>
                   </div>
                 </td>
                 <td class="d-flex justify-content-end">
-                  <button type="button" class="btn btn-primary">
-                    <i class="fa fa-pencil"></i> editar
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="open(content, a)"
+                  >
+                    <i class="fa fa-pencil"></i> Editar
                   </button>
                 </td>
               </tr>
@@ -95,3 +105,119 @@
     </div>
   </div>
 </div>
+
+<!-- Modal to create and update an activity -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ modalTitle }}</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="clientForm" class="form-horizontal" role="form">
+      <div class="form-group required">
+        <div class="row mt-2">
+          <div class="col-md-6">
+            <label class="control-label">Nombre:</label>
+            <div class="">
+              <input
+                formControlName="clientName"
+                id="input-client-name"
+                class="form-control"
+                type="text"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="control-label">Apellido:</label>
+            <div class="">
+              <input
+                formControlName="clientLastName"
+                id="input-client-last-name"
+                class="form-control"
+                type="text"
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6">
+            <label class="control-label">Cédula:</label>
+            <div class="">
+              <input
+                formControlName="clientDni"
+                id="input-client-dni"
+                class="form-control"
+                type="text"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="control-label">Hijos:</label>
+            <div class="">
+              <input
+                formControlName="clientChildren"
+                id="input-childred"
+                class="form-control"
+                type="text"
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row d-flex offset-1 mt-2">
+          <div class="form-check col-md-4">
+            <input
+              formControlName="clientLegalPerson"
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="legal-person-check"
+            />
+            <label class="form-check-label" for="legal-person-check">
+              Persona Jurídica
+            </label>
+          </div>
+          <div class="form-check col-md-4">
+            <input
+              formControlName="clientIsSalaried"
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="salaried-check"
+            />
+            <label class="form-check-label" for="salaried-check">
+              Asalariado
+            </label>
+          </div>
+          <div class="form-check col-md-4">
+            <input
+              formControlName="clientHasMate"
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="has-mate-check"
+            />
+            <label class="form-check-label" for="has-mate-check">
+              Conyugue
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="saveClient()">
+      Guardar
+    </button>
+  </div>
+</ng-template>
