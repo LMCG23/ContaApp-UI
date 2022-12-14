@@ -25,6 +25,7 @@ export class ClientComponent implements OnInit {
   clientForm: FormGroup = new FormGroup({});
   closeResult: string = "";
   modalTitle: string = "";
+  showInactive: boolean = false;
 
   // management client variable
   managementClient: Client = new Client();
@@ -49,6 +50,7 @@ export class ClientComponent implements OnInit {
   public fetchAllClientsByAcountingFirmId(): void {
     let request: InquiryResquest = new InquiryResquest();
     request.accountingFirmId = this.accountingId;
+    request.showInactive = this.showInactive;
     this.adminService
       .getAllClientsByAccoutingFirmId(request)
       .subscribe((result: InquiryResponse) => {
@@ -101,6 +103,9 @@ export class ClientComponent implements OnInit {
     );
     this.clientForm.controls.clientIsSalaried.setValue(
       this.managementClient.isSalaried
+    );
+    this.clientForm.controls.clientActive.setValue(
+      this.managementClient.isActive
     );
   }
 
@@ -253,7 +258,7 @@ export class ClientComponent implements OnInit {
         client.modifiedBy =
           localStorage.getItem(environment.localStorage.userName) || "";
         this.adminService
-          .updateActivity(client)
+          .updateClient(client)
           .subscribe((response: ResultHelper) => {
             if (response.success) {
               this.toastService.showSuccessToast(
@@ -269,5 +274,13 @@ export class ClientComponent implements OnInit {
             }
           });
       });
+  }
+
+  /**
+   * this is called when the user select the show inactive checkbox, show the inactives clients
+   * @returns {void}
+   */
+  showInactives(): void {
+    this.fetchAllClientsByAcountingFirmId();
   }
 }
