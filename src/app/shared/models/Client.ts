@@ -2,14 +2,14 @@ import { AccountingFirm } from "./AccountingFirm";
 import { Base } from "./Base";
 
 export class Client extends Base {
-  id: number = 0;
-  accountingFirmId: number = 0;
-  name: string = "";
-  dni: string = "";
-  lastName: string = "";
-  isLegalPerson: boolean = false;
-  hasMate: boolean = false;
-  children?: number;
-  isSalaried: boolean = false;
   accountingFirm: AccountingFirm = new AccountingFirm();
+  accountingFirmId: number = 0;
+  children?: number;
+  dni: string = "";
+  hasMate: boolean = false;
+  id: number = 0;
+  isLegalPerson: boolean = false;
+  isSalaried: boolean = false;
+  lastName: string = "";
+  name: string = "";
 }

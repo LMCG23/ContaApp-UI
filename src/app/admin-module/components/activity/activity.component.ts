@@ -21,9 +21,10 @@ export class ActivityComponent implements OnInit {
 
   //Variables
   accountingId: number = 0;
+  activityForm: FormGroup = new FormGroup({});
   closeResult: string = "";
   modalTitle: string = "";
-  activityForm: FormGroup = new FormGroup({});
+  showInactive: boolean = false;
 
   //management activity variables
   managementActivity: Activity = new Activity();
@@ -48,6 +49,7 @@ export class ActivityComponent implements OnInit {
   public fetchAllActivitiesByAcountingFirmId(): void {
     let request: InquiryResquest = new InquiryResquest();
     request.accountingFirmId = this.accountingId;
+    request.showInactive = this.showInactive;
     this.adminService
       .getAllActivitiesByAccoutingFirmId(request)
       .subscribe((result: InquiryResponse) => {
@@ -81,6 +83,7 @@ export class ActivityComponent implements OnInit {
     if (activity) {
       this.managementActivity = activity;
       this.activityForm.controls.activityName.setValue(activity.name);
+      this.activityForm.controls.activityActive.setValue(activity.isActive);
       this.modalTitle = `Editar Actividad ${activity.name}`;
       this.modalService
         .open(content, { ariaLabelledBy: "modal-basic-title" })
@@ -193,7 +196,7 @@ export class ActivityComponent implements OnInit {
 
   /**
    * this is called when the user select the delete button, make inactive the activity
-   * @param {reason:any}  the reason
+   * @param {activity:Activity}  the activity to be updated
    * @returns {void}
    */
   public makeInactive(activity: Activity) {
@@ -220,5 +223,13 @@ export class ActivityComponent implements OnInit {
             }
           });
       });
+  }
+
+  /**
+   * this is called when the user select the show inactive checkbox, show the inactives activities
+   * @returns {void}
+   */
+  showInactives(): void {
+    this.fetchAllActivitiesByAcountingFirmId();
   }
 }
