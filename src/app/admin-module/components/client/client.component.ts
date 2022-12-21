@@ -26,6 +26,7 @@ export class ClientComponent implements OnInit {
   closeResult: string = "";
   modalTitle: string = "";
   showInactive: boolean = false;
+  legalPerson: boolean = false;
 
   // management client variable
   managementClient: Client = new Client();
@@ -118,6 +119,7 @@ export class ClientComponent implements OnInit {
       this.managementClient = client;
       this.fillFormGroup();
       this.modalTitle = `Editar Client ${client.name}`;
+      this.legalPerson = client.isLegalPerson ? true : false;
       this.modalService
         .open(content, { ariaLabelledBy: "modal-basic-title" })
         .result.then(
@@ -130,6 +132,7 @@ export class ClientComponent implements OnInit {
         );
     } else {
       this.modalTitle = `Nuevo Cliente`;
+      this.legalPerson = false;
       this.modalService
         .open(content, { ariaLabelledBy: "modal-basic-title" })
         .result.then(
@@ -185,6 +188,12 @@ export class ClientComponent implements OnInit {
           }
         });
     } else {
+      if (this.managementClient.isLegalPerson) {
+        this.managementClient.isSalaried = false;
+        this.managementClient.hasMate = false;
+        this.managementClient.lastName = "NA";
+        this.managementClient.children = 0;
+      }
       this.adminService
         .createClient(this.managementClient)
         .subscribe((response: ResultHelper) => {
@@ -282,5 +291,20 @@ export class ClientComponent implements OnInit {
    */
   showInactives(): void {
     this.fetchAllClientsByAcountingFirmId();
+  }
+
+  /**
+   * this is called when the user select the legal person checkbox
+   * @returns {void}
+   */
+  IsLegalPerson(): void {
+    this.legalPerson = !this.legalPerson;
+    if (this.legalPerson === true) {
+      this.clientForm.controls.clientChildren.setValue(0);
+      this.clientForm.controls.clientLastName.setValue("NA");
+    } else {
+      this.clientForm.controls.clientChildren.setValue(null);
+      this.clientForm.controls.clientLastName.setValue(null);
+    }
   }
 }
