@@ -40,11 +40,19 @@
           <table class="table align-middle text-nowrap">
             <thead>
               <tr>
+                <th class="text-dark font-medium fs-4">Código</th>
                 <th class="text-dark font-medium fs-4">Nombre</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let a of activityList">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">{{ a.id }}</h5>
+                    </div>
+                  </div>
+                </td>
                 <td>
                   <div class="d-flex align-items-center">
                     <div class="ms-3">
