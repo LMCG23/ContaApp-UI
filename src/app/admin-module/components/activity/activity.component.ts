@@ -135,7 +135,6 @@ export class ActivityComponent implements OnInit {
   private UpdateCreateActivity() {
     this.managementActivity.name =
       this.activityForm.controls.activityName.value;
-    this.managementActivity.accountingFirmId = this.accountingId;
     this.managementActivity.isActive =
       this.activityForm.controls.activityActive.value;
     this.managementActivity.createdBy =
