@@ -21,6 +21,7 @@ import { FullComponent } from "./layouts/full/full.component";
 import { NavigationComponent } from "./shared/header/navigation.component";
 import { SidebarComponent } from "./shared/sidebar/sidebar.component";
 import { SpinnerComponent } from "./shared/spinner.component";
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -51,7 +52,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     }),
     PerfectScrollbarModule,
     HttpClientModule,
-    NgbModule,
+    NgMultiSelectDropDownModule,
   ],
   providers: [
     {

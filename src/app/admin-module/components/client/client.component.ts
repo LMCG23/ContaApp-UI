@@ -17,6 +17,10 @@ import { AccountingFirm } from "../../../shared/models/AccountingFirm";
   styleUrls: ["./client.component.scss"],
 })
 export class ClientComponent implements OnInit {
+  dropdownList: Array<any> = [];
+  selectedItems: Array<any> = [];
+  dropdownSettings: any = {};
+
   //List of clients
   public clientList: Array<Client> = new Array<Client>();
 
@@ -45,6 +49,16 @@ export class ClientComponent implements OnInit {
     if (this.accountingId) {
       this.fetchAllClientsByAcountingFirmId();
       this.buildFormGroup();
+
+      this.dropdownSettings = {
+        singleSelection: false,
+        idField: "item_id",
+        textField: "item_text",
+        selectAllText: "Seleccionar Todos",
+        unSelectAllText: "Deseleccionar Todos ",
+        itemsShowLimit: 3,
+        allowSearchFilter: true,
+      };
     }
   }
 
@@ -306,5 +320,12 @@ export class ClientComponent implements OnInit {
       this.clientForm.controls.clientChildren.setValue(null);
       this.clientForm.controls.clientLastName.setValue(null);
     }
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
   }
 }

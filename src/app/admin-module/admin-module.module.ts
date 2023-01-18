@@ -7,6 +7,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { ActivityComponent } from "./components/activity/activity.component";
 import { ClientComponent } from "./components/client/client.component";
 import { SharedComponentsModule } from "../shared-components/shared-components.module";
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 
 @NgModule({
   declarations: [AdminPageComponent, ActivityComponent, ClientComponent],
@@ -17,6 +18,7 @@ import { SharedComponentsModule } from "../shared-components/shared-components.m
     AdminModuleRoutingModule,
     MatTabsModule,
     SharedComponentsModule,
+    NgMultiSelectDropDownModule,
   ],
 })
 export class AdminModuleModule {}
