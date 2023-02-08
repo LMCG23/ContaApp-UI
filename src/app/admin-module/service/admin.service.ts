@@ -88,7 +88,6 @@ export class AdminService {
    */
 
   createClient(client: Client): Observable<ResultHelper> {
-    console.log(JSON.stringify(client));
     const url = `${this.clientEndpoint}`;
     return this.http.post<ResultHelper>(url, client);
   }

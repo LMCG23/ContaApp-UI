@@ -1,0 +1,29 @@
+.multiselect {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.select-header {
+  background-color: #f7f7f7;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.select-header span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.select-header .collapsed::before {
+  content: "+";
+  margin-right: 8px;
+}
+
+.select-header .collapsed:not(::before) {
+  transform: rotate(90deg);
+}
+
+.collapsed {
+  display: none;
+}

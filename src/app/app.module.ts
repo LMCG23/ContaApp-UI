@@ -10,6 +10,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { MultiSelectModule } from "@syncfusion/ej2-angular-dropdowns";
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarModule,
@@ -21,7 +23,6 @@ import { FullComponent } from "./layouts/full/full.component";
 import { NavigationComponent } from "./shared/header/navigation.component";
 import { SidebarComponent } from "./shared/sidebar/sidebar.component";
 import { SpinnerComponent } from "./shared/spinner.component";
-import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -53,6 +54,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     HttpClientModule,
     NgMultiSelectDropDownModule,
+    MultiSelectModule,
   ],
   providers: [
     {

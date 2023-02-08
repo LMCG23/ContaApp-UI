@@ -136,7 +136,7 @@
   </div>
 </div>
 
-<!-- Modal to create and update an activity -->
+<!-- Modal to create and update a Client -->
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">{{ modalTitle }}</h4>
@@ -291,22 +291,21 @@
             </div>
           </div>
         </div>
-        <div class="row mt-2">
-          <div class="col-md-6">
-            <label class="control-label">Actividad:</label>
-            <ng-multiselect-dropdown
-              [placeholder]="'Seleccionar Actividad'"
-              [settings]="dropdownSettings"
-              [data]="dropdownList"
-              [(ngModel)]="selectedItems"
-              (onSelect)="onItemSelect($event)"
-              (onSelectAll)="onSelectAll($event)"
-            >
-            </ng-multiselect-dropdown>
-          </div>
-        </div>
       </div>
     </form>
+
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <label class="control-label">Actividad:</label>
+        <ng-multiselect-dropdown
+          [placeholder]="'Seleccionar Actividad'"
+          [settings]="dropdownSettings"
+          [data]="dropdownList"
+          [(ngModel)]="selectedItems"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="saveClient()">
