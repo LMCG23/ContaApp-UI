@@ -10,6 +10,8 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ResultHelper } from "../../../shared/models/Common/ResultHelper";
 import { AccountingFirm } from "../../../shared/models/AccountingFirm";
+import { Activity } from "../../../shared/models/Activity";
+import { ActivityClient } from "../../../shared/models/ActivityClient";
 
 @Component({
   selector: "app-client",
@@ -23,7 +25,7 @@ export class ClientComponent implements OnInit {
 
   //List of clients
   public clientList: Array<Client> = new Array<Client>();
-
+  public Activities: Map<number, string> = new Map<number, string>();
   //Variables
   accountingId: number = 0;
   clientForm: FormGroup = new FormGroup({});
@@ -49,6 +51,7 @@ export class ClientComponent implements OnInit {
     if (this.accountingId) {
       this.fetchAllClientsByAcountingFirmId();
       this.buildFormGroup();
+      this.fetchAllActivities();
 
       this.dropdownSettings = {
         singleSelection: false,
@@ -94,7 +97,9 @@ export class ClientComponent implements OnInit {
       clientHasMate: new FormControl(false),
       clientIsSalaried: new FormControl(false),
       clientActive: new FormControl(true),
+      clientActivities: new FormControl(1, [Validators.required]),
     });
+    this.selectedItems = [];
   }
 
   /**
@@ -129,8 +134,16 @@ export class ClientComponent implements OnInit {
    * @returns {void}
    */
   open(content: any, client?: Client): void {
+    debugger;
     if (client) {
       this.managementClient = client;
+      client.activities.forEach((element: ActivityClient) => {
+        this.selectedItems.push({
+          item_id: element.activityId,
+          item_text: this.Activities.get(element.activityId),
+        });
+      });
+
       this.fillFormGroup();
       this.modalTitle = `Editar Client ${client.name}`;
       this.legalPerson = client.isLegalPerson ? true : false;
@@ -251,6 +264,14 @@ export class ClientComponent implements OnInit {
     this.managementClient.isActive =
       this.clientForm.controls.clientActive.value;
     this.managementClient.accountingFirm = new AccountingFirm();
+    this.managementClient.activities = new Array<ActivityClient>();
+    this.selectedItems.forEach((element) => {
+      let activityClient: ActivityClient = {
+        clientId: this.managementClient.id,
+        activityId: element.item_id,
+      };
+      this.managementClient.activities.push(activityClient);
+    });
   }
 
   /**
@@ -259,7 +280,7 @@ export class ClientComponent implements OnInit {
    * @returns {void}
    */
   public saveClient() {
-    if (this.clientForm.valid) {
+    if (this.clientForm.valid && this.selectedItems.length > 0) {
       this.UpdateCreateClient();
       this.modalService.dismissAll();
     } else {
@@ -322,10 +343,30 @@ export class ClientComponent implements OnInit {
     }
   }
 
-  onItemSelect(item: any) {
-    console.log(item);
-  }
-  onSelectAll(items: any) {
-    console.log(items);
+  /**
+   * this method fill the activity dropdown
+   * @returns {void}
+   */
+  public fetchAllActivities(): void {
+    let request: InquiryResquest = new InquiryResquest();
+    request.showInactive = false;
+    this.adminService
+      .getAllActivitiesByAccoutingFirmId(request)
+      .subscribe((result: InquiryResponse) => {
+        if (result.operationSuccess) {
+          result.returnValues.forEach((element: Activity) => {
+            this.Activities.set(element.id, element.name);
+            this.dropdownList.push({
+              item_id: element.id,
+              item_text: element.name,
+            });
+          });
+        } else {
+          this.toastService.showErrorToast(
+            "Error al obtener la lista de actividades",
+            "Ocurrio un error al obtener la lista de actividades intente mas tarde..."
+          );
+        }
+      });
   }
 }

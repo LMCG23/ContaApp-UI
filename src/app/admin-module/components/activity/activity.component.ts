@@ -41,14 +41,13 @@ export class ActivityComponent implements OnInit {
       localStorage.getItem(environment.localStorage.userAccountingFirm) || ""
     );
     if (this.accountingId) {
-      this.fetchAllActivitiesByAcountingFirmId();
+      this.fetchAllActivities();
       this.buildFormGroup();
     }
   }
 
-  public fetchAllActivitiesByAcountingFirmId(): void {
+  public fetchAllActivities(): void {
     let request: InquiryResquest = new InquiryResquest();
-    request.accountingFirmId = this.accountingId;
     request.showInactive = this.showInactive;
     this.adminService
       .getAllActivitiesByAccoutingFirmId(request)
@@ -150,7 +149,7 @@ export class ActivityComponent implements OnInit {
               "Actulización de Actividad",
               "La Actividad se actualizó correctamente"
             );
-            this.fetchAllActivitiesByAcountingFirmId();
+            this.fetchAllActivities();
           } else {
             this.toastService.showErrorToast(
               "Actulización de Actividad",
@@ -167,7 +166,7 @@ export class ActivityComponent implements OnInit {
               "Nueva Actividad",
               "La Actividad se creó correctamente"
             );
-            this.fetchAllActivitiesByAcountingFirmId();
+            this.fetchAllActivities();
           } else {
             this.toastService.showErrorToast(
               "Nueva de Actividad",
@@ -213,7 +212,7 @@ export class ActivityComponent implements OnInit {
                 "Eliminar Actividad",
                 "La Actividad se ha eliminado correctamente"
               );
-              this.fetchAllActivitiesByAcountingFirmId();
+              this.fetchAllActivities();
             } else {
               this.toastService.showErrorToast(
                 "Eliminar Actividad",
@@ -229,6 +228,6 @@ export class ActivityComponent implements OnInit {
    * @returns {void}
    */
   showInactives(): void {
-    this.fetchAllActivitiesByAcountingFirmId();
+    this.fetchAllActivities();
   }
 }
