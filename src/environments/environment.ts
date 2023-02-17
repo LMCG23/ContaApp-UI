@@ -14,6 +14,7 @@ export const environment = {
     userAccountingFirm: "UserAccountingFirm",
     nameOfuser: "NameOfUser",
     userId: "UserId",
+    clientId: "ClientId",
   },
 };
 
