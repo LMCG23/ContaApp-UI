@@ -10,7 +10,7 @@ export class ClientSelectComponent implements OnInit {
   // variables
   closeResult: string = "";
 
-  selectedCar: number;
+  selectedCar: number = 0;
 
   cars = [
     { id: 1, name: "Volvo" },
