@@ -23,6 +23,7 @@ import { FullComponent } from "./layouts/full/full.component";
 import { NavigationComponent } from "./shared/header/navigation.component";
 import { SidebarComponent } from "./shared/sidebar/sidebar.component";
 import { SpinnerComponent } from "./shared/spinner.component";
+import { ClientSelectComponent } from "./shared/client-select/client-select/client-select.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -38,6 +39,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FullComponent,
     NavigationComponent,
     SidebarComponent,
+    ClientSelectComponent,
   ],
   imports: [
     CommonModule,

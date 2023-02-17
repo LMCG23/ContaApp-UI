@@ -11,6 +11,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { environment } from "../../../environments/environment";
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { AuthserviceService } from "../authentication/authservice.service";
+import { ClientSelectComponent } from "../client-select/client-select/client-select.component";
 
 declare var $: any;
 
@@ -26,7 +27,7 @@ export class NavigationComponent implements AfterViewInit, OnInit {
   public config: PerfectScrollbarConfigInterface = {};
 
   public showSearch = false;
-
+  public myCompOneObj: any;
   constructor(
     private modalService: NgbModal,
     @Inject(AuthserviceService) private authSvs: AuthserviceService,
@@ -130,7 +131,9 @@ export class NavigationComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.myCompOneObj = new ClientSelectComponent(this.modalService);
+  }
 
   logout() {
     this.authSvs.logout();
