@@ -1,5 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Client } from "../../../shared/models/Client";
+import { InquiryResquest } from "../../../shared/models/Common/InquiryRequest";
+import { InquiryResponse } from "../../../shared/models/Common/InquiryResponse";
+import { environment } from "../../../../environments/environment";
+import { AdminService } from "../../../admin-module/service/admin.service";
 
 @Component({
   selector: "app-client-select",
@@ -9,24 +15,32 @@ import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 export class ClientSelectComponent implements OnInit {
   // variables
   closeResult: string = "";
+  modalcontent: any;
+  title = "angular-mat-select-app";
 
-  selectedCar: number = 0;
+  selected: string = "";
 
-  cars = [
-    { id: 1, name: "Volvo" },
-    { id: 2, name: "Saab" },
-    { id: 3, name: "Opel" },
-    { id: 4, name: "Audi" },
-  ];
-  constructor(private modalService: NgbModal) {}
+  clientSelectForm: FormGroup = new FormGroup({});
+  //List of clients
+  public clientList: Array<Client> = new Array<Client>();
 
-  ngOnInit(): void {}
+  constructor(
+    private modalService: NgbModal,
+    @Inject(AdminService) private adminService: AdminService
+  ) {}
+
+  ngOnInit(): void {
+    this.buildFormGroup();
+
+    this.fetchAllClientsByAcountingFirmId();
+  }
 
   /**
    * this method allow open the modal
    * @returns {void}
    */
   public open(content: any): void {
+    this.modalcontent = content;
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
@@ -46,6 +60,7 @@ export class ClientSelectComponent implements OnInit {
    */
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
+      this.open(this.modalcontent);
       return "by pressing ESC";
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return "by clicking on a backdrop";
@@ -60,6 +75,40 @@ export class ClientSelectComponent implements OnInit {
    * @returns {void}
    */
   close() {
-    this.modalService.dismissAll();
+    let clientSelected =
+      localStorage.getItem(environment.localStorage.clientId) || null;
+    if (clientSelected !== null) {
+      this.modalService.dismissAll();
+    }
+  }
+
+  /**
+   * this method allow to build the form group
+   * @returns {void}
+   */
+  buildFormGroup() {
+    this.clientSelectForm = new FormGroup({
+      clientSelected: new FormControl(null, [Validators.required]),
+    });
+  }
+
+  public fetchAllClientsByAcountingFirmId(): void {
+    let request: InquiryResquest = new InquiryResquest();
+    request.accountingFirmId = parseInt(
+      localStorage.getItem(environment.localStorage.userAccountingFirm) || ""
+    );
+    request.showInactive = false;
+    this.adminService
+      .getAllClientsByAccoutingFirmId(request)
+      .subscribe((result: InquiryResponse) => {
+        if (result.operationSuccess) {
+          this.clientList = result.returnValues;
+        }
+      });
+  }
+
+  public setClientLocalStorage() {
+    localStorage.setItem(environment.localStorage.clientId, this.selected);
+    this.close();
   }
 }

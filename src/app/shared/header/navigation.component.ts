@@ -1,15 +1,16 @@
 import {
-  Component,
   AfterViewInit,
+  Component,
   EventEmitter,
-  Output,
   Inject,
   OnInit,
+  Output,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { environment } from "../../../environments/environment";
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+import { environment } from "../../../environments/environment";
+import { AdminService } from "../../admin-module/service/admin.service";
 import { AuthserviceService } from "../authentication/authservice.service";
 import { ClientSelectComponent } from "../client-select/client-select/client-select.component";
 
@@ -31,7 +32,8 @@ export class NavigationComponent implements AfterViewInit, OnInit {
   constructor(
     private modalService: NgbModal,
     @Inject(AuthserviceService) private authSvs: AuthserviceService,
-    private router: Router
+    private router: Router,
+    @Inject(AdminService) private adminService: AdminService
   ) {}
 
   // This is for Notifications
@@ -132,7 +134,10 @@ export class NavigationComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {}
 
   ngOnInit(): void {
-    this.myCompOneObj = new ClientSelectComponent(this.modalService);
+    this.myCompOneObj = new ClientSelectComponent(
+      this.modalService,
+      this.adminService
+    );
   }
 
   logout() {

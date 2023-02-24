@@ -24,6 +24,9 @@ import { NavigationComponent } from "./shared/header/navigation.component";
 import { SidebarComponent } from "./shared/sidebar/sidebar.component";
 import { SpinnerComponent } from "./shared/spinner.component";
 import { ClientSelectComponent } from "./shared/client-select/client-select/client-select.component";
+import { MatSelectModule } from "@angular/material/select";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -57,6 +60,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     NgMultiSelectDropDownModule,
     MultiSelectModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [
     {
