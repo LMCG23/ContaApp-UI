@@ -40,3 +40,6 @@ body {
 .ng-submitted input.ng-invalid {
   border-color: red;
 }
+.cdk-overlay-container {
+  z-index: 1190 !important;
+}
