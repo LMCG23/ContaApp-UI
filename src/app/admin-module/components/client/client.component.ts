@@ -134,7 +134,6 @@ export class ClientComponent implements OnInit {
    * @returns {void}
    */
   open(content: any, client?: Client): void {
-    debugger;
     if (client) {
       this.managementClient = client;
       client.activities.forEach((element: ActivityClient) => {

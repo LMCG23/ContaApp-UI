@@ -29,6 +29,7 @@ export class NavigationComponent implements AfterViewInit, OnInit {
 
   public showSearch = false;
   public myCompOneObj: any;
+  btnName: string = "";
   constructor(
     private modalService: NgbModal,
     @Inject(AuthserviceService) private authSvs: AuthserviceService,
@@ -131,7 +132,10 @@ export class NavigationComponent implements AfterViewInit, OnInit {
     },
   ];
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.btnName =
+      localStorage.getItem(environment.localStorage.clientName) || "";
+  }
 
   ngOnInit(): void {
     this.myCompOneObj = new ClientSelectComponent(

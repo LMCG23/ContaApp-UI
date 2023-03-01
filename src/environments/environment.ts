@@ -15,6 +15,7 @@ export const environment = {
     nameOfuser: "NameOfUser",
     userId: "UserId",
     clientId: "ClientId",
+    clientName: "ClientName",
   },
 };
 

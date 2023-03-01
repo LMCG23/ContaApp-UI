@@ -1,18 +1,18 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Client } from "../../../shared/models/Client";
-import { InquiryResquest } from "../../../shared/models/Common/InquiryRequest";
-import { InquiryResponse } from "../../../shared/models/Common/InquiryResponse";
-import { environment } from "../../../../environments/environment";
-import { AdminService } from "../../../admin-module/service/admin.service";
+import { AdminService } from "../../admin-module/service/admin.service";
+import { Client } from "../../shared/models/Client";
+import { InquiryResquest } from "../../shared/models/Common/InquiryRequest";
+import { InquiryResponse } from "../../shared/models/Common/InquiryResponse";
+import { environment } from "../../../environments/environment";
 
 @Component({
-  selector: "app-client-select",
-  templateUrl: "./client-select.component.html",
-  styleUrls: ["./client-select.component.scss"],
+  selector: "app-shared-client-select-modal",
+  templateUrl: "./shared-client-select-modal.component.html",
+  styleUrls: ["./shared-client-select-modal.component.scss"],
 })
-export class ClientSelectComponent implements OnInit {
+export class SharedClientSelectModalComponent implements OnInit {
   // variables
   closeResult: string = "";
   modalcontent: any;
@@ -31,6 +31,7 @@ export class ClientSelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildFormGroup();
+
     this.fetchAllClientsByAcountingFirmId();
   }
 
