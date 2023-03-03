@@ -1,0 +1,154 @@
+<!-- Toaster -->
+<app-toaster-container></app-toaster-container>
+<div class="row mt-4 p-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Lista de Proveedores</h4>
+        <div class="row">
+          <div class="col-md-6">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="open(content)"
+            >
+              <i class="fa-solid fa-plus"></i> Agregar
+            </button>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex justify-content-end">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="show-inactive-check"
+                [(ngModel)]="showInactive"
+                (change)="showInactives()"
+              />
+              <label
+                class="form-check-label"
+                style="margin-left: 15px"
+                for="show-inactive-check"
+              >
+                Mostrar Inactivos
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table align-middle text-nowrap">
+            <thead>
+              <tr>
+                <th class="text-dark font-medium fs-4">Cédula</th>
+                <th class="text-dark font-medium fs-4">Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of providerList">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">{{ item.dni }}</h5>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">{{ item.name }}</h5>
+                    </div>
+                  </div>
+                </td>
+                <td class="d-flex justify-content-end">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="makeInactive(item)"
+                  >
+                    <i class="fa fa-pencil"></i> Eliminar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="open(content, item)"
+                  >
+                    <i class="fa fa-pencil"></i> Editar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to create and update an provider -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ modalTitle }}</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="providerForm" class="form-horizontal" role="form">
+      <div class="row">
+        <div class="form-check col-md-12">
+          <div class="d-flex justify-content-end mt-2">
+            <input
+              formControlName="providerActive"
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="has-active-check"
+            />
+            <label
+              class="form-check-label"
+              style="margin-left: 15px"
+              for="has-active-check"
+            >
+              Active
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group required col-md-6">
+          <label class="control-label">Cédula del Proveedor:</label>
+          <input
+            formControlName="providerDni"
+            id="input-provider-dni"
+            class="form-control"
+            type="text"
+            required
+          />
+        </div>
+
+        <div class="form-group required col-md-6">
+          <label class="control-label">Nombre del Proveedor:</label>
+          <input
+            formControlName="providerName"
+            id="input-provider-name"
+            class="form-control"
+            type="text"
+            required
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="saveProvider()">
+      Guardar
+    </button>
+  </div>
+</ng-template>

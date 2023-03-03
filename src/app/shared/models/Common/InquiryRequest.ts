@@ -2,7 +2,8 @@ export class InquiryResquest {
   pageSize: number = 25;
   pageNumber: number = 1;
   withPaging: boolean = true;
-  accountingFirmId: number = 0;
+  accountingFirmId?: number = 0;
+  clientId?: number = 0;
   showInactive: boolean = false;
 
   constructor(paging: boolean = true, size: number = 20, num: number = 1) {
@@ -28,6 +29,9 @@ export class InquiryResquest {
     this.accountingFirmId
       ? arrayToParse.push(`accountingFirmId=${this.accountingFirmId}`)
       : null;
+
+    // client id is nullabe, need to check if the field has content before parsing
+    this.clientId ? arrayToParse.push(`clientId=${this.clientId}`) : null;
 
     parsedString += arrayToParse.join("&");
 

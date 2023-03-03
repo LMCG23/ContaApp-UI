@@ -9,8 +9,9 @@ import { ClientComponent } from "./components/client/client.component";
 import { SharedComponentsModule } from "../shared-components/shared-components.module";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { MultiSelectModule } from "@syncfusion/ej2-angular-dropdowns";
+import { ProviderComponent } from './components/provider/provider.component';
 @NgModule({
-  declarations: [AdminPageComponent, ActivityComponent, ClientComponent],
+  declarations: [AdminPageComponent, ActivityComponent, ClientComponent, ProviderComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

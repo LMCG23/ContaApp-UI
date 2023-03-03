@@ -7,6 +7,7 @@ import { InquiryResquest } from "../../shared/models/Common/InquiryRequest";
 import { Activity } from "../../shared/models/Activity";
 import { ResultHelper } from "../../shared/models/Common/ResultHelper";
 import { Client } from "../../shared/models/Client";
+import { Provider } from "../../shared/models/Provider";
 
 @Injectable({
   providedIn: "root",
@@ -16,6 +17,10 @@ export class AdminService {
   private readonly activityEndpoint = environment.webApi + "Activity";
   //Client Enpoint
   private readonly clientEndpoint = environment.webApi + "Client";
+
+  //Provider Endpoint
+  private readonly providerEndpoint = environment.webApi + "Provider";
+
   constructor(private http: HttpClient) {}
 
   /**
@@ -90,5 +95,42 @@ export class AdminService {
   createClient(client: Client): Observable<ResultHelper> {
     const url = `${this.clientEndpoint}`;
     return this.http.post<ResultHelper>(url, client);
+  }
+
+  /**
+   * this method allow to get all providers by client id
+   * @param {inquiryRequest:InquiryResquest} the request to fetch the data
+   * @returns {Observable<ResultHelper>}
+   */
+
+  getAllProvidersByClientId(
+    inquiryRequest: InquiryResquest
+  ): Observable<InquiryResponse> {
+    const request = inquiryRequest.parseQueryString();
+
+    const url = `${this.providerEndpoint}/All${request}`;
+    return this.http.get<InquiryResponse>(url);
+  }
+
+  /**
+   * this method allow to update an provider
+   * @param {provider:Provider} the Activity to be updated
+   * @returns {Observable<ResultHelper>}
+   */
+
+  updateProvider(provider: Provider): Observable<ResultHelper> {
+    const url = `${this.providerEndpoint}`;
+    return this.http.put<ResultHelper>(url, provider);
+  }
+
+  /**
+   * this method allow to create a provider
+   * @param {provider:Provider}  the Activity to be created
+   * @returns {Observable<ResultHelper>}
+   */
+
+  createProvider(provider: Provider): Observable<ResultHelper> {
+    const url = `${this.providerEndpoint}`;
+    return this.http.post<ResultHelper>(url, provider);
   }
 }
